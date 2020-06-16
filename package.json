@@ -13,5 +13,8 @@
   "license": "MIT",
   "devDependencies": {
     "bs-platform": "^7.3.2"
+  },
+  "dependencies": {
+    "web-streams-polyfill": "^2.1.1"
   }
 }
