@@ -1,9 +1,17 @@
 type t;
 
-type transformer('controller, 'chunk) = {
-  start: option('controller => Js.Promise.t(unit)),
-  transformer: option(('chunk, 'controller) => Js.Promise.t(unit)),
-  flush: option('controller => Js.Promise.t(unit)),
+module DefaultController = {
+  type t = {desiredSize: int};
+
+  [@bs.send] external enqueue: (t, 'a) => unit = "enqueue";
+  [@bs.send] external error: (t, 'a) => unit = "error";
+  [@bs.send] external terminate: t => unit = "terminate";
+};
+
+type transformer('chunk) = {
+  start: option(DefaultController.t => Js.Promise.t(unit)),
+  transform: option(('chunk, DefaultController.t) => unit),
+  flush: option(DefaultController.t => Js.Promise.t(unit)),
 };
 
 type queuingStrategy('a) = {
@@ -12,9 +20,17 @@ type queuingStrategy('a) = {
 };
 
 [@bs.module "web-streams-polyfill/es2018"] [@bs.new]
-external make:
-  (transformer('a, 'b), queuingStrategy('b), queuingStrategy('b)) => t =
+external _make:
+  (
+    option(transformer('a)),
+    option(queuingStrategy('b)),
+    option(queuingStrategy('c))
+  ) =>
+  t =
   "TransformStream";
+
+let make = (~transformer=?, ~writableStrategy=?, ~readableStrategy=?, ()) =>
+  _make(transformer, writableStrategy, readableStrategy);
 
 [@bs.get] external readable: t => ReadableStream.t = "readable";
 [@bs.get] external writable: t => WritableStream.t = "writable";
