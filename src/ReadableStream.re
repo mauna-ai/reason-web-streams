@@ -18,7 +18,7 @@ type either('a, 'b) =
   | Left('a)
   | Right('b);
 
-type t('a) = either('a, status);
+type t('a) = either(Js.Promise.t('a), status);
 type signal;
 type getReaderMode = {mode: string};
 type pipeThroughArgs('a) = {
