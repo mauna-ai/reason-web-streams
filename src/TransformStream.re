@@ -32,5 +32,5 @@ external _make:
 let make = (~transformer=?, ~writableStrategy=?, ~readableStrategy=?, ()) =>
   _make(transformer, writableStrategy, readableStrategy);
 
-[@bs.get] external readable: t => ReadableStream.t = "readable";
+[@bs.get] external readable: t => ReadableStream.t('a) = "readable";
 [@bs.get] external writable: t => WritableStream.t = "writable";
