@@ -8,9 +8,14 @@ module DefaultController = {
 
 module DefaultReader = {
   type t;
+  type chunk('a) = {
+    [@bs.as "done"]
+    _done: bool,
+    value: 'a,
+  };
 
   [@bs.send] external cancel: (t, 'a) => Js.Promise.t(unit) = "cancel";
-  [@bs.send] external read: (t, 'a) => 'b = "read";
+  [@bs.send] external read: t => Js.Promise.t(chunk('a)) = "read";
 };
 
 type status;
@@ -52,7 +57,7 @@ external _make: (underlyingSource('a), option(queuingStrategy('b))) => t('a) = "
 let make = (~underlyingSource, ~strategy, ()) => _make(underlyingSource, strategy);
 
 [@bs.send.pipe: t('a)] external cancel: 'a => Js.Promise.t(unit) = "cancel";
-[@bs.send] external getReader: (t('b), 'a) => DefaultReader.t = "getReader";
+[@bs.send] external getReader: t('b) => DefaultReader.t = "getReader";
 [@bs.send] external pipeThrough: (t('b), 'a) => t('a) = "pipeThrough";
 [@bs.send] external pipeTo: (t('a), WritableStream.t, pipeOptions) => Js.Promise.t(unit) = "pipeTo";
 [@bs.send] external tee: t('a) => (t('a), t('a)) = "tee";
