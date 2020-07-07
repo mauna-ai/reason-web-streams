@@ -9,6 +9,7 @@ module DefaultController = {
 module DefaultReader = {
   type t;
 
+  // [@bs.get]
   [@bs.send] external cancel: (t, 'a) => Js.Promise.t(unit) = "cancel";
   [@bs.send] external read: (t, 'a) => 'b = "read";
   [@bs.send] external releaseLock: t => unit = "releaseLock";
