@@ -1,5 +1,5 @@
 {
-  "name": "reason-web-streams-polyfill",
+  "name": "@mauna/reason-web-streams",
   "version": "0.1.0",
   "sources": {
     "dir": "src",
