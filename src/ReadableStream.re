@@ -6,11 +6,16 @@ module DefaultController = {
   [@bs.send] external error: 'a => unit = "error";
 };
 
+type readResult('a) = {
+  done_: bool,
+  value: option('a),
+};
+
 module DefaultReader = {
   type t;
 
   [@bs.send] external cancel: (t, 'a) => Js.Promise.t(unit) = "cancel";
-  [@bs.send] external read: (t, 'a) => 'b = "read";
+  [@bs.send] external read: t => Js.Promise.t(readResult('a)) = "read";
   [@bs.send] external releaseLock: t => unit = "releaseLock";
 };
 
