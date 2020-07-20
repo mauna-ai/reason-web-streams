@@ -2,7 +2,7 @@ module DefaultController = {
   type t = {desiredSize: int};
 
   [@bs.send] external close: t => unit = "close";
-  [@bs.send] external enqueue: 'a => unit = "enqueue";
+  [@bs.send] external enqueue: (t, 'a) => unit = "enqueue";
   [@bs.send] external error: 'a => unit = "error";
 };
 
@@ -23,12 +23,12 @@ type either('a, 'b) =
   | Left('a)
   | Right('b);
 
-type t('a) = either(Js.Promise.t('a), status);
+type t;
 type signal;
 type getReaderMode = {mode: string};
 type pipeThroughArgs('a) = {
   writable: WritableStream.t,
-  t: t('a),
+  t: t,
 };
 type pipeOptions = {
   preventClose: option(bool),
@@ -52,13 +52,13 @@ type queuingStrategy('a) = {
 };
 
 [@bs.module "web-streams-polyfill/es2018"] [@bs.new]
-external _make: (underlyingSource('a), option(queuingStrategy('b))) => t('a) = "ReadableStream";
+external _make: (underlyingSource('a), option(queuingStrategy('b))) => t = "ReadableStream";
 
 let make = (~underlyingSource, ~strategy, ()) => _make(underlyingSource, strategy);
 
-[@bs.send.pipe: t('a)] external cancel: 'a => Js.Promise.t(unit) = "cancel";
-[@bs.send] external getReader: t('b) => DefaultReader.t = "getReader";
-[@bs.send] external pipeThrough: (t('b), 'a) => t('a) = "pipeThrough";
-[@bs.send] external pipeTo: (t('a), WritableStream.t, pipeOptions) => Js.Promise.t(unit) = "pipeTo";
-[@bs.send] external tee: t('a) => (t('a), t('a)) = "tee";
-[@bs.send] external getIterator: (t('a), iterator) => asyncIterator = "getIterator";
+[@bs.send.pipe: t] external cancel: 'a => Js.Promise.t(unit) = "cancel";
+[@bs.send] external getReader: t => DefaultReader.t = "getReader";
+[@bs.send] external pipeThrough: (t, 'a) => t = "pipeThrough";
+[@bs.send] external pipeTo: (t, WritableStream.t, pipeOptions) => Js.Promise.t(unit) = "pipeTo";
+[@bs.send] external tee: t => (t, t) = "tee";
+[@bs.send] external getIterator: (t, iterator) => asyncIterator = "getIterator";
