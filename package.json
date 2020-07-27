@@ -1,6 +1,6 @@
 {
   "name": "@mauna/reason-web-streams",
-  "version": "0.1.2-development",
+  "version": "0.1.3-development",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
