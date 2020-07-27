@@ -22,7 +22,12 @@ module DefaultReader = {
   [@bs.send] external cancel: (t, 'a) => Js.Promise.t(unit) = "cancel";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   [@bs.send] external read: t => Js.Promise.t(chunk('a)) = "read";
+=======
+  [@bs.send] external read: t => Js.Promise.t(readResult('a)) = "read";
+  [@bs.send] external releaseLock: t => unit = "releaseLock";
+>>>>>>> master
 =======
   [@bs.send] external read: t => Js.Promise.t(readResult('a)) = "read";
   [@bs.send] external releaseLock: t => unit = "releaseLock";
@@ -71,8 +76,8 @@ external _make: (underlyingSource('a), option(queuingStrategy('b))) => t = "Read
 
 let make = (~underlyingSource, ~strategy, ()) => _make(underlyingSource, strategy);
 
-[@bs.send.pipe: t] external cancel: 'a => Js.Promise.t(unit) = "cancel";
 [@bs.get] external locked: t => bool = "locked";
+[@bs.send] external cancel: (t, 'a) => Js.Promise.t(unit) = "cancel";
 [@bs.send] external getReader: t => DefaultReader.t = "getReader";
 [@bs.send] external pipeThrough: (t, 'a) => t = "pipeThrough";
 [@bs.send] external pipeTo: (t, WritableStream.t, pipeOptions) => Js.Promise.t(unit) = "pipeTo";
