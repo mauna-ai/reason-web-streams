@@ -37,6 +37,6 @@ external _make:
 let make = (~underlyingSink=?, ~strategy=?, ()) =>
   _make(underlyingSink, strategy);
 
-[@bs.send] external getWriter: (t, unit) => DefaultWriter.t = "getWriter";
-[@bs.send] external close: (t, unit) => Js.Promise.t(unit) = "close";
+[@bs.send] external getWriter: t => DefaultWriter.t = "getWriter";
+[@bs.send] external close: t => Js.Promise.t(unit) = "close";
 [@bs.send] external abort: (t, string) => Js.Promise.t(unit) = "abort";
