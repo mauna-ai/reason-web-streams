@@ -1,4 +1,7 @@
-type t;
+type t = {
+  readable: ReadableStream.t,
+  writable: WritableStream.t,
+};
 
 module DefaultController = {
   type t = {desiredSize: int};
