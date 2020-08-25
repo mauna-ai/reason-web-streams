@@ -1,6 +1,6 @@
 {
   "name": "@mauna/reason-web-streams",
-  "version": "0.1.7-development",
+  "version": "0.1.8-development",
   "description": "Web Streams Polyfill bindings for Reasonml",
   "repository": "https://github.com/mauna-cloud/--reason-web-streams",
   "author": "Philip Balbas <philip@mauna.ai>",
