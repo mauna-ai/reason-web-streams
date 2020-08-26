@@ -2,7 +2,7 @@
   "name": "@mauna/reason-web-streams",
   "version": "0.1.9-development",
   "description": "Web Streams Polyfill bindings for Reasonml",
-  "repository": "https://github.com/mauna-cloud/--reason-web-streams",
+  "repository": "https://github.com/mauna-ai/reason-web-streams",
   "author": "Philip Balbas <philip@mauna.ai>",
   "scripts": {
     "clean": "bsb -clean-world",
