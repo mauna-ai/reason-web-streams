@@ -15,6 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "bs-platform": "^8.2.0",
+    "bsdoc": "^6.0.4-alpha",
     "semantic-release": "^17.1.1"
   },
   "dependencies": {
